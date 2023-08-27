@@ -1,0 +1,15 @@
+{
+  "name": "nodejs-logger-ohhevr",
+  "version": "1.0.0",
+  "description": "Develop the command line node.js application, which parses the input log file (see Input Example). The application should find all the log messages with the level error and print them into the output file (see Output Format).",
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  }
+}
