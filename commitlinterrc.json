@@ -1,0 +1,7 @@
+{
+  "min-len": 10,
+  "max-len": 120,
+  "types": {
+    "style": false
+  }
+}
