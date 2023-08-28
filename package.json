@@ -8,10 +8,10 @@
   "engines": {
     "node": ">=18.0.0"
   },
-  "main": "./dist/index.js",
+  "main": "./dist/parser.js",
   "scripts": {
-    "start": "node ./dist/index.js",
-    "dev": "ts-node ./src/index.ts",
+    "start": "node ./dist/parser.js",
+    "dev": "ts-node ./src/parser.ts",
     "lint": "ts-standard --fix",
     "test": "jest --runInBand --no-cache --silent",
     "build": "tsc"
