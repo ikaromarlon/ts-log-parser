@@ -34,13 +34,13 @@ describe('CLI unit tests', () => {
     process.argv.push(
       '--input', './app.log'
     )
-    const mockConsoleError = jest.spyOn(console, 'error').mockImplementation()
+    const mockConsoleError = jest.spyOn(console, 'error').mockImplementation(() => {})
     const mockProcessExit = jest.spyOn(process, 'exit').mockImplementation()
 
     const sut = new CLI()
     sut.init()
 
-    expect(mockConsoleError).toBeCalledTimes(1)
+    expect(mockConsoleError).toBeCalledWith("error: required option '-o, --output <file>' not specified")
     expect(mockProcessExit).toBeCalledWith(1)
   })
 })

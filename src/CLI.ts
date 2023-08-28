@@ -9,25 +9,25 @@ class CLI {
   public args!: Args
 
   public init (): void {
-    try {
-      this.parseArgs()
-    } catch (error: any) {
-      this.handleError(error)
-    }
+    this.parseArgs()
   }
 
   private parseArgs (): void {
-    const command = new Command()
-    command.exitOverride()
+    try {
+      const command = new Command()
+      command.exitOverride()
 
-    command
-      .name('node parser.js')
-      .usage('--input <file.log> --output <file.json>')
-      .requiredOption('-i, --input <file>', 'The input file.')
-      .requiredOption('-o, --output <file>', 'The output file.')
-      .parse(process.argv)
+      command
+        .name('node parser.js')
+        .usage('--input <file.log> --output <file.json>')
+        .requiredOption('-i, --input <file>', 'The input file.')
+        .requiredOption('-o, --output <file>', 'The output file.')
+        .parse(process.argv)
 
-    this.args = command.opts()
+      this.args = command.opts()
+    } catch (error: any) {
+      this.handleError(error)
+    }
   }
 
   private handleError (error: any): void {
