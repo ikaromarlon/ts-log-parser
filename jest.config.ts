@@ -23,7 +23,7 @@ const config: Config = {
 
   // An array of glob patterns indicating a set of files for which coverage information should be collected
   collectCoverageFrom: [
-    '<rootDir>/src/**/*.ts'
+    'src/*.ts'
   ],
 
   // The directory where Jest should output its coverage files
@@ -129,7 +129,8 @@ const config: Config = {
 
   // A list of paths to directories that Jest should use to search for files in
   roots: [
-    '<rootDir>/tests'
+    'src',
+    'tests'
   ],
 
   // Allows you to use a custom runner instead of Jest's default test runner
