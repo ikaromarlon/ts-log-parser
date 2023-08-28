@@ -28,7 +28,7 @@ const makeSut = (): Sut => {
   const logParserStub = new LogParserStub()
   const logWriterStub = new LogWriterStub()
   const input = './tests/mocks/app.log'
-  const output = './tests/mocks/error.json'
+  const output = './tests/mocks/errors.json'
   const sut = new LogProcessor(input, output, logParserStub, logWriterStub)
 
   return {
