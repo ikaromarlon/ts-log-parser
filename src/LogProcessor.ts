@@ -3,8 +3,7 @@ import readline from 'readline'
 import LogData from './protocols/LogData'
 import LogParser from './protocols/LogParser'
 import LogWriter from './protocols/LogWriter'
-
-const FILE_ENCODING = 'utf8'
+import { FILE_ENCODING } from './utils/consts'
 
 export default class LogProcessor {
   private readonly data: LogData[] = []
@@ -31,9 +30,9 @@ export default class LogProcessor {
       })
 
       rl.on('line', (line) => {
-        const parsedLine = this.parser.parse(line)
-        if (parsedLine !== null) {
-          this.data.push(parsedLine)
+        const logData = this.parser.parse(line)
+        if (logData !== null) {
+          this.data.push(logData)
         }
       })
 
@@ -44,7 +43,7 @@ export default class LogProcessor {
         resolve()
       })
 
-      rl.on('error', (error) => reject(error))
+      rl.on('error', (err) => reject(err))
     })
   }
 }
