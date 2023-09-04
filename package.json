@@ -14,7 +14,7 @@
     "dev": "ts-node ./src/parser.ts --input ./app.log --output ./errors.log",
     "lint": "ts-standard --fix",
     "test": "jest --runInBand --no-cache --silent",
-    "build": "tsc"
+    "build": "rm -rf ./dist && tsc"
   },
   "devDependencies": {
     "@types/jest": "^29.5.4",
