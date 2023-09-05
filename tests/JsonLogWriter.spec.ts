@@ -1,66 +1,107 @@
-import JsonLogWriter from '../src/JsonLogWriter'
 import fs, { WriteStream } from 'fs'
+import path from 'path'
+import JsonLogWriter from '../src/JsonLogWriter'
 import LogData from '../src/protocols/LogData'
+import mockLogData from './mocks/mockLogData.json'
 
-interface Sut {
-  sut: JsonLogWriter
-  outputStream: WriteStream
+const defaultOutputFile = path.resolve(__dirname, './tmp/default-errors.json')
+const prettyOutputFile = path.resolve(__dirname, './tmp/pretty-errors.json')
+
+function cleanUpTests(stream: WriteStream, file: string) {
+  stream.close(() => {
+    if (fs.existsSync(file)) {
+      fs.unlinkSync(file)
+    }
+  })
 }
 
-const outputFile = './tests/mocks/errors.json'
+describe('JsonLogWriter unit tests', () => {  
+  describe('Default JSON', () => {
 
-const makeSut = (): Sut => {
-  const sut = new JsonLogWriter()
+    test('Should write first log char(s) to json file successfully', () => {
+      const sut = new JsonLogWriter()
+      
+      const outputStream = fs.createWriteStream(defaultOutputFile)
+      const spyStream = jest.spyOn(outputStream, 'write')
+  
+      sut.writeStart(outputStream)
+      
+      cleanUpTests(outputStream, defaultOutputFile)
+      
+      expect(spyStream).toBeCalledWith('[')
+    })
 
-  const outputStream = fs.createWriteStream(outputFile)
+    test('Should write parsed log data to json file successfully', () => {
+      const sut = new JsonLogWriter()
+      
+      const outputStream = fs.createWriteStream(defaultOutputFile)
+      const spyStream = jest.spyOn(outputStream, 'write')
+  
+      const data: LogData = { ...mockLogData }
+  
+      sut.write(outputStream, data)
+      
+      cleanUpTests(outputStream, defaultOutputFile)
+      
+      expect(spyStream).toBeCalledWith(JSON.stringify(data))
+    })
 
-  return {
-    sut,
-    outputStream
-  }
-}
-
-describe('JsonLogWriter unit tests', () => {
-
-  afterAll(() => {
-    fs.unlinkSync(outputFile)
+    test('Should write last log char(s) to json file successfully', () => {
+      const sut = new JsonLogWriter()
+      
+      const outputStream = fs.createWriteStream(defaultOutputFile)
+      const spyStream = jest.spyOn(outputStream, 'write')
+  
+      sut.writeEnd(outputStream)
+      
+      cleanUpTests(outputStream, defaultOutputFile)
+      
+      expect(spyStream).toBeCalledWith(']')
+    })
   })
 
-  test('Should write parsed log to json file successfully', () => {
-    const { sut, outputStream } = makeSut()
+  describe('Pretty JSON', () => {
 
-    const spyStream = jest.spyOn(outputStream, 'write')
+    test('Should write first log char(s) to pretty json file successfully', () => {
+      const sut = new JsonLogWriter({ prettify: true })
+      
+      const outputStream = fs.createWriteStream(prettyOutputFile)
+      const spyStream = jest.spyOn(outputStream, 'write')
+  
+      sut.writeStart(outputStream)
+      
+      cleanUpTests(outputStream, prettyOutputFile)
+      
+      expect(spyStream).toBeCalledWith('[')
+    })
 
-    const data: LogData[] = [{
-      timestamp: Date.now(),
-      loglevel: 'error',
-      transactionId: 'any-uuid',
-      err: 'Not found',
-      code: 404
-    }]
+    test('Should write parsed log data to pretty json file successfully', () => {
+      const sut = new JsonLogWriter({ prettify: true })
+      
+      const outputStream = fs.createWriteStream(prettyOutputFile)
+      const spyStream = jest.spyOn(outputStream, 'write')
+      
+      const data: LogData = { ...mockLogData }
+      
+      sut.write(outputStream, data)
+      
+      cleanUpTests(outputStream, prettyOutputFile)
+  
+      expect(spyStream).toBeCalledWith(`\n  ${JSON.stringify(data, null, 2).replace(/\n/g, '\n  ')}`)
+    })
 
-    sut.write(outputStream, data)
-
-    expect(spyStream).toBeCalledWith(JSON.stringify(data))
+    test('Should write last log char(s) to pretty json file successfully', () => {
+      const sut = new JsonLogWriter({ prettify: true })
+      
+      const outputStream = fs.createWriteStream(prettyOutputFile)
+      const spyStream = jest.spyOn(outputStream, 'write')
+  
+      sut.writeEnd(outputStream)
+      
+      cleanUpTests(outputStream, prettyOutputFile)
+      
+      expect(spyStream).toBeCalledWith('\n]')
+    })
   })
 
-  test('Should write pretty parsed log to json file successfully', () => {
-    const { outputStream } = makeSut()
-
-    const sut = new JsonLogWriter({ prettify: true })
-
-    const spyStream = jest.spyOn(outputStream, 'write')
-
-    const data: LogData[] = [{
-      timestamp: Date.now(),
-      loglevel: 'error',
-      transactionId: 'any-uuid',
-      err: 'Not found',
-      code: 404
-    }]
-
-    sut.write(outputStream, data)
-
-    expect(spyStream).toBeCalledWith(JSON.stringify(data, null, 2))
-  })
 })

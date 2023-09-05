@@ -1,8 +1,13 @@
+import fs, { WriteStream } from 'fs'
+import path from 'path'
 import LogParser from '../src/protocols/LogParser'
 import LogProcessor from '../src/LogProcessor'
 import LogData from '../src/protocols/LogData'
 import LogWriter from '../src/protocols/LogWriter'
-import { WriteStream } from 'fs'
+import mockLogData from './mocks/mockLogData.json'
+
+const inputFile = path.resolve(__dirname, './mocks/app.log')
+const outputFile = path.resolve(__dirname, './tmp/errors.json')
 
 interface Sut {
   sut: LogProcessor
@@ -13,23 +18,20 @@ interface Sut {
 const makeSut = (): Sut => {
   class LogParserStub implements LogParser {
     parse (line: string): LogData {
-      return {
-        timestamp: Date.now(),
-        loglevel: 'error',
-        transactionId: 'uuid-value'
-      }
+      return mockLogData
     }
   }
 
   class LogWriterStub implements LogWriter {
-    write (writer: WriteStream, data: LogData[]): void {}
+    writeStart (writer: WriteStream): void {}
+    write (writer: WriteStream, data: LogData): void {}
+    writeEnd (writer: WriteStream): void {}
   }
 
   const logParserStub = new LogParserStub()
   const logWriterStub = new LogWriterStub()
-  const input = './tests/mocks/app.log'
-  const output = './tests/mocks/errors.json'
-  const sut = new LogProcessor(input, output, logParserStub, logWriterStub)
+
+  const sut = new LogProcessor(inputFile, outputFile, logParserStub, logWriterStub)
 
   return {
     sut,
@@ -39,6 +41,11 @@ const makeSut = (): Sut => {
 }
 
 describe('LogProcessor unit tests', () => {
+
+  afterEach(() => {
+    fs.unlinkSync(outputFile)
+  })
+
   test('Should process log successfully', async () => {
     const { sut, logParserStub, logWriterStub } = makeSut()
 
