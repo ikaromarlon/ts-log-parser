@@ -1,13 +1,10 @@
 import fs from 'fs'
 import readline from 'readline'
-import LogData from './protocols/LogData'
 import LogParser from './protocols/LogParser'
 import LogWriter from './protocols/LogWriter'
 import { FILE_ENCODING } from './utils/consts'
 
 export default class LogProcessor {
-  private readonly data: LogData[] = []
-
   constructor (
     private readonly input: string,
     private readonly output: string,
@@ -23,6 +20,10 @@ export default class LogProcessor {
       const outputStream = fs.createWriteStream(this.output, FILE_ENCODING)
       outputStream.on('error', (err) => reject(err))
 
+      outputStream.on('open', () => {
+        this.writer.writeStart(outputStream)
+      })
+
       const rl = readline.createInterface({
         input: inputStream,
         output: outputStream,
@@ -32,12 +33,12 @@ export default class LogProcessor {
       rl.on('line', (line) => {
         const logData = this.parser.parse(line)
         if (logData !== null) {
-          this.data.push(logData)
+          this.writer.write(outputStream, logData)
         }
       })
 
       rl.on('close', () => {
-        this.writer.write(outputStream, this.data)
+        this.writer.writeEnd(outputStream)
         outputStream.close()
         console.log('Log parsed successfully')
         resolve()
