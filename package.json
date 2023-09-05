@@ -10,8 +10,8 @@
   },
   "main": "./dist/parser.js",
   "scripts": {
-    "start": "node ./dist/parser.js --input ./app.log --output ./errors.log",
-    "dev": "ts-node ./src/parser.ts --input ./app.log --output ./errors.log",
+    "start": "node ./dist/parser.js --input ./app.log --output ./errors.json",
+    "dev": "ts-node ./src/parser.ts --input ./app.log --output ./errors.json",
     "lint": "ts-standard --fix",
     "test": "jest --runInBand --no-cache --silent",
     "build": "rm -rf ./dist && tsc"

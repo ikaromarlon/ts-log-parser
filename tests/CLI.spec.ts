@@ -51,7 +51,7 @@ describe('CLI unit tests', () => {
 
   test('Should print error and exit application due to missing required argument --input in process.argv', () => {
     process.argv.push(
-      '--output', './errors.log'
+      '--output', './errors.json'
     )
     const mockConsoleError = jest.spyOn(console, 'error').mockImplementation(() => {})
     const mockProcessExit = jest.spyOn(process, 'exit').mockImplementation()
