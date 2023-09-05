@@ -1,7 +1,7 @@
 {
-  "name": "nodejs-logger-ohhevr",
+  "name": "ts-log-parser",
   "version": "1.0.0",
-  "description": "Develop the command line node.js application, which parses the input log file (see Input Example). The application should find all the log messages with the level error and print them into the output file (see Output Format).",
+  "description": "A command line node.js application, which parses the input log file. The application should find all the log messages with the level error and print them into the output file.",
   "keywords": [],
   "author": "",
   "license": "ISC",
