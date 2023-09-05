@@ -6,10 +6,10 @@ import LogProcessor from './LogProcessor'
 function exec (): void {
   const cli = new CLI()
   cli.init()
-  const { input, output } = cli.args
+  const { input, output, ...options } = cli.args
 
   const logParser = new LogParser()
-  const jsonLogWriter = new JsonLogWriter()
+  const jsonLogWriter = new JsonLogWriter(options)
   const logProcessor = new LogProcessor(input, output, logParser, jsonLogWriter)
 
   logProcessor.process()

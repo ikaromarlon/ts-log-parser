@@ -3,6 +3,7 @@ import { Command } from 'commander'
 interface Args {
   input: string
   output: string
+  prettify?: boolean
 }
 
 class CLI {
@@ -22,6 +23,7 @@ class CLI {
         .usage('--input <file.log> --output <file.json>')
         .requiredOption('-i, --input <file>', 'The input file.')
         .requiredOption('-o, --output <file>', 'The output file.')
+        .option('-p, --prettify', 'Prettify the output file.')
         .parse(process.argv)
 
       this.args = command.opts()
