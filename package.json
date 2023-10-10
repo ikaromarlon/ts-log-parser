@@ -1,7 +1,7 @@
 {
   "name": "ts-log-parser",
   "version": "1.0.0",
-  "description": "A command line node.js application, which parses the input log file. The application should find all the log messages with the level error and print them into the output file.",
+  "description": "A simple command line application, which parses the input log file.",
   "keywords": [],
   "author": "",
   "license": "ISC",

@@ -1,26 +1,25 @@
-### Log parser app
+## LogParser
 
-Develop the command line node.js application, which parses the input log file (see Input Example).
-The application should find all the log messages with the level error and print them into the output file (see Output Format).
+A simple command line application built uppon Node.js with TypeScript.
 
-### Requirements
+The application should find all the log messages with the level error and print them into the output file.
 
-- TypeScript OOP project.
-- Node.js v18+.
-- Designed in accordance with OOD principles (DRY, SLAP, SOLID, etc).
-- Unit-testing ready (or partially covered by tests).
-- Flexibility of the architecture. Application should be easy to extend and modify.
+#### Techniques and Patterns
 
-### AC
+- OOD principles (DRY, SLAP, SOLID, etc)
+- Clean Architecture
+- Unity testing
+- TDD
+- [Conventional Commits](https://www.conventionalcommits.org/)
 
-- Code should compile and run without errors.
-- App should follow the input/output contract described below.
+#### Technologies
 
-#### Important
+- [NodeJS 18+](https://nodejs.org/dist/latest-v18.x/docs/api/)
+- [TypeScript](https://www.typescriptlang.org/)
 
-If any of the AC is not met, the task will be rejected automatically.
+#### Dependecies
 
-### Contracts
+- [command](https://www.npmjs.com/package/command)
 
 #### Expected Usage
 
