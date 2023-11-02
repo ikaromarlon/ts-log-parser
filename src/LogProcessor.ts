@@ -15,10 +15,10 @@ export default class LogProcessor {
   async process (): Promise<void> {
     return await new Promise((resolve, reject) => {
       const inputStream = fs.createReadStream(this.input, FILE_ENCODING)
-      inputStream.on('error', (err) => reject(err))
+      inputStream.on('error', reject)
 
       const outputStream = fs.createWriteStream(this.output, FILE_ENCODING)
-      outputStream.on('error', (err) => reject(err))
+      outputStream.on('error', reject)
 
       outputStream.on('open', () => {
         this.writer.writeStart(outputStream)
@@ -44,7 +44,7 @@ export default class LogProcessor {
         resolve()
       })
 
-      rl.on('error', (err) => reject(err))
+      rl.on('error', reject)
     })
   }
 }
