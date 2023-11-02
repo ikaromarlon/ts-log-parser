@@ -13,7 +13,7 @@
     "start": "node ./dist/parser.js --input ./app.log --output ./errors.json",
     "dev": "ts-node ./src/parser.ts --input ./app.log --output ./errors.json",
     "lint": "ts-standard --fix",
-    "test": "jest --runInBand --no-cache --silent",
+    "test": "jest --no-cache --silent",
     "build": "rimraf ./dist && tsc"
   },
   "devDependencies": {
