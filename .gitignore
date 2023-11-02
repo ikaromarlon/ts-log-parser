@@ -107,5 +107,3 @@ dist
 app.log
 !tests/mocks/app.log
 errors.json
-# files generated during tests executions goes here:
-tests/tmp
