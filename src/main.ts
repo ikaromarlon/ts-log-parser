@@ -3,7 +3,7 @@ import LogParser from './LogParser'
 import JsonLogWriter from './JsonLogWriter'
 import LogProcessor from './LogProcessor'
 
-function exec (): void {
+function main (): void {
   const cli = new CLI()
   cli.init()
   const { input, output, ...options } = cli.args
@@ -16,4 +16,4 @@ function exec (): void {
     .catch(err => console.error(err.message))
 }
 
-void exec()
+void main()

@@ -8,10 +8,10 @@
   "engines": {
     "node": ">=18.0.0"
   },
-  "main": "./dist/parser.js",
+  "main": "./dist/main.js",
   "scripts": {
-    "start": "node ./dist/parser.js --input ./app.log --output ./errors.json",
-    "dev": "ts-node ./src/parser.ts --input ./app.log --output ./errors.json",
+    "start": "node ./dist/main.js --input ./app.log --output ./errors.json",
+    "dev": "ts-node ./src/main.ts --input ./app.log --output ./errors.json",
     "lint": "ts-standard --fix",
     "test": "jest --runInBand --no-cache --silent",
     "build": "rimraf ./dist && tsc"
