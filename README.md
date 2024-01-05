@@ -2,6 +2,10 @@
 
 A simple command line application built uppon Node.js with TypeScript.
 
+[![JavaScript Style Guide](https://img.shields.io/badge/code_style-standard-brightgreen.svg)](https://standardjs.com)
+[![CI](https://github.com/ikaromarlon/ts-log-parser/actions/workflows/main.yml/badge.svg?branch=master)](https://github.com/ikaromarlon/ts-log-parser/actions/workflows/main.yml)
+[![Coverage Status](https://coveralls.io/repos/github/ikaromarlon/ts-log-parser/badge.svg?branch=master)](https://coveralls.io/github/ikaromarlon/ts-log-parser?branch=master)
+
 The application should find all the log messages with the level error and print them into the output file.
 
 #### Techniques and Patterns
